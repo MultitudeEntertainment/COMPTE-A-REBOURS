@@ -9,7 +9,10 @@
     /* =========================================================
        RESET DE BASE
        ---------------------------------------------------------
-       On nettoie tout pour partir d'un rendu contrôlé
+       On nettoie tout pour partir d'un rendu maîtrisé :
+       - pas de marges ni de padding par défaut
+       - box-sizing: border-box sur tous les éléments
+       - html et body en pleine hauteur
     ========================================================== */
     * {
       margin: 0;
@@ -26,8 +29,10 @@
     /* =========================================================
        FOND GLOBAL
        ---------------------------------------------------------
-       Ciel de nuit légèrement bleuté qui tombe vers du noir
-       pour servir de base au décor de Noël
+       Ciel de nuit avec un dégradé radial bleu nuit → noir.
+       On crée une ambiance immersive, légèrement bleutée au
+       centre, plus sombre sur les bords pour donner une
+       profondeur de ciel de nuit.
     ========================================================== */
     body {
       background:
@@ -35,16 +40,15 @@
       color: #ffffff;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         sans-serif;
-      overflow: hidden;
+      overflow: hidden; /* Empêche les scrollbars pour un rendu plein écran */
     }
 
     /* =========================================================
        SCÈNE PRINCIPALE
        ---------------------------------------------------------
-       Conteneur plein écran pour :
-       - Canvas (neige, étoiles filantes, feux d'artifice)
-       - Lune
-       - Texte JOYEUX NOËL en boucle
+       - Conteneur plein écran
+       - Centre le contenu (texte principal)
+       - Gère la superposition avec le canvas en arrière-plan
     ========================================================== */
     .scene {
       position: relative;
@@ -58,28 +62,32 @@
     }
 
     /* =========================================================
-       CANVAS EFFETS VISUELS
+       CANVAS DES EFFETS VISUELS
        ---------------------------------------------------------
-       Dessus :
-       - neige qui tombe
-       - étoiles filantes
-       - feux d’artifice permanents (boucle)
+       - S'étend sur toute la scène
+       - Utilisé pour :
+         * neige
+         * étoiles filantes
+         * feux d'artifice
     ========================================================== */
     #effectsCanvas {
       position: absolute;
-      inset: 0;
+      inset: 0;       /* top: 0; right: 0; bottom: 0; left: 0; */
       width: 100%;
       height: 100%;
       display: block;
       z-index: 1;
-      pointer-events: none;
+      pointer-events: none; /* Le canvas ne bloque aucun clic */
     }
 
     /* =========================================================
        LUNE 2025
        ---------------------------------------------------------
-       Disque blanc très lumineux, avec "2025" gravé,
-       comme une lune symbolique de l'année.
+       Lune stylisée :
+       - disque blanc très lumineux
+       - halo autour
+       - "2025" gravé au centre
+       - légère animation de flottement
     ========================================================== */
     .moon {
       position: absolute;
@@ -125,6 +133,7 @@
       transform: translateY(3px);
     }
 
+    /* Lune qui flotte légèrement pour donner de la vie */
     @keyframes moon-drift {
       0% {
         transform: translateY(0px);
@@ -140,7 +149,9 @@
     /* =========================================================
        CONTENU CENTRAL
        ---------------------------------------------------------
-       Conteneur pour le texte JOYEUX NOËL
+       Contient :
+       - le sous-titre : "C'est Noël !"
+       - le message principal : "JOYEUX NOËL !"
     ========================================================== */
     .content {
       position: relative;
@@ -149,23 +160,33 @@
       max-width: 100%;
     }
 
+    /* ---------------------------------------------------------
+       SOUS-TITRE "C'est Noël !"
+       ---------------------------------------------------------
+       Court, simple, lisible, légèrement lumineux, au-dessus
+       de "JOYEUX NOËL !".
+    --------------------------------------------------------- */
     .subtitle {
-      font-size: 1.1rem;
-      letter-spacing: 0.18em;
+      font-size: 1.3rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: #c7e5ff;
+      color: #f4f5ff;
       text-shadow:
         0 0 6px rgba(0, 180, 255, 0.7),
         0 0 16px rgba(0, 120, 255, 0.6);
-      margin-bottom: 1.8rem;
+      margin-bottom: 1.6rem;
       opacity: 0.95;
+      white-space: nowrap;
     }
 
     /* =========================================================
-       JOYEUX NOËL (TEXTE PRINCIPAL)
+       MESSAGE PRINCIPAL "JOYEUX NOËL !"
        ---------------------------------------------------------
-       On ne fait plus de compte à rebours, juste
-       un JOYEUX NOËL qui tourne en boucle.
+       Bloc central :
+       - forme de pilule
+       - halo coloré
+       - guirlande lumineuse autour
+       - texte scintillant / changeant de couleur
     ========================================================== */
     .christmas-message {
       font-size: clamp(3.4rem, 8vw, 6rem);
@@ -187,7 +208,7 @@
       animation: glow-pulse-strong 2.4s infinite ease-in-out;
     }
 
-    /* Halo sombre derrière pour lisibilité */
+    /* Halo sombre derrière pour améliorer la lisibilité sur les feux d’artifice */
     .christmas-message::after {
       content: "";
       position: absolute;
@@ -198,7 +219,7 @@
       z-index: 0;
     }
 
-    /* Guirlande lumineuse circulaire autour du bloc */
+    /* Guirlande lumineuse circulaire (halo coloré) autour du bloc */
     .christmas-message::before {
       content: "";
       position: absolute;
@@ -229,11 +250,16 @@
         0 0 18px rgba(255, 0, 0, 0.9),
         0 0 28px rgba(0, 255, 120, 0.9),
         0 0 40px rgba(255, 255, 255, 0.8);
+      /* Scintillement + changement de couleur */
       animation:
         twinkle-fast 1.3s infinite alternate ease-in-out,
         christmas-colors 3.6s infinite linear;
+      white-space: nowrap;
     }
 
+    /* ---------------------------------------------------------
+       Scintillement du texte "JOYEUX NOËL !"
+    --------------------------------------------------------- */
     @keyframes twinkle-fast {
       0% {
         opacity: 0.7;
@@ -249,6 +275,9 @@
       }
     }
 
+    /* ---------------------------------------------------------
+       Changement de couleurs du texte (guirlande douce)
+    --------------------------------------------------------- */
     @keyframes christmas-colors {
       0% {
         color: #ffffff;
@@ -267,24 +296,33 @@
       }
     }
 
+    /* ---------------------------------------------------------
+       Pulsation du bloc JOYEUX NOËL
+    --------------------------------------------------------- */
     @keyframes glow-pulse-strong {
       0% {
         box-shadow:
           0 0 20px rgba(0, 0, 0, 0.9),
           0 0 30px rgba(255, 0, 0, 0.8);
+        transform: scale(1);
       }
       50% {
         box-shadow:
           0 0 30px rgba(0, 0, 0, 0.95),
           0 0 70px rgba(0, 255, 120, 1);
+        transform: scale(1.03);
       }
       100% {
         box-shadow:
           0 0 20px rgba(0, 0, 0, 0.9),
           0 0 30px rgba(255, 0, 0, 0.8);
+        transform: scale(1);
       }
     }
 
+    /* ---------------------------------------------------------
+       Rotation lente de la guirlande colorée (autour du bloc)
+    --------------------------------------------------------- */
     @keyframes garland-spin {
       0% {
         transform: rotate(0deg);
@@ -295,18 +333,9 @@
     }
 
     /* =========================================================
-       PETIT TEXTE EN DESSOUS (optionnel, discret)
-    ========================================================== */
-    .hint {
-      margin-top: 1.2rem;
-      font-size: 0.9rem;
-      color: #c3d4ff;
-      opacity: 0.8;
-      text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-    }
-
-    /* =========================================================
        RESPONSIVE
+       ---------------------------------------------------------
+       Ajustements pour écrans moyens et petits
     ========================================================== */
     @media (max-width: 900px) {
       .moon {
@@ -322,11 +351,7 @@
       }
 
       .subtitle {
-        font-size: 1rem;
-      }
-
-      .hint {
-        font-size: 0.85rem;
+        font-size: 1.1rem;
       }
     }
 
@@ -344,18 +369,14 @@
       }
 
       .subtitle {
-        font-size: 0.9rem;
-      }
-
-      .hint {
-        font-size: 0.8rem;
+        font-size: 1rem;
       }
     }
   </style>
 </head>
 <body>
   <!-- =========================================================
-       SCÈNE
+       SCÈNE PRINCIPALE
   ========================================================== -->
   <div class="scene">
     <!-- Canvas : neige, étoiles filantes, feux d'artifice -->
@@ -366,18 +387,14 @@
       <div class="moon-text">2025</div>
     </div>
 
-    <!-- Contenu principal : JOYEUX NOËL en boucle -->
+    <!-- Contenu principal : "C'est Noël !" + "JOYEUX NOËL !" -->
     <div class="content">
       <div class="subtitle">
-        C'est Noël, profite de la magie
+        C'est Noël !
       </div>
 
       <div class="christmas-message">
         <span class="christmas-message-text">JOYEUX NOËL !</span>
-      </div>
-
-      <div class="hint">
-        Laisse tourner, la neige tombe et le ciel s'illumine sans fin.
       </div>
     </div>
   </div>
@@ -386,6 +403,10 @@
     // =========================================================
     //  NEIGE + ÉTOILES FILANTES + FEUX D’ARTIFICE (BOUCLE NOËL)
     // =========================================================
+
+    // ---------------------------------------------------------
+    // Setup canvas
+    // ---------------------------------------------------------
     const canvas = document.getElementById("effectsCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -401,7 +422,9 @@
       canvas.height = height;
     });
 
-    // ----------------------------- NEIGE -----------------------------
+    // =========================================================
+    //  NEIGE
+    // =========================================================
     const snowflakes = [];
     const SNOW_COUNT = 230;
 
@@ -443,7 +466,9 @@
       ctx.restore();
     }
 
-    // ----------------------------- ÉTOILES FILANTES -----------------------------
+    // =========================================================
+    //  ÉTOILES FILANTES
+    // =========================================================
     let shootingStars = [];
     let lastShootingStar = 0;
     const SHOOTING_INTERVAL = 5000; // toutes les 5s
@@ -490,12 +515,14 @@
       ctx.restore();
     }
 
-    // ------------------------ FEUX D’ARTIFICE ------------------------
+    // =========================================================
+    //  FEUX D’ARTIFICE
+    // =========================================================
     let fireworks = [];
     let lastFireworkTime = 0;
-    const FIREWORK_INTERVAL = 800; // entre explosions dans un groupe
+    const FIREWORK_INTERVAL = 800; // intervalle entre explosions dans un groupe
 
-    // Mode boucle : ici, Noël est déjà là, donc on tire tout le temps
+    // Mode boucle : Noël est là → feu d'artifice en continu
     let fireworksContinuous = true;
 
     function createFirework() {
@@ -533,6 +560,7 @@
     }
 
     function drawFireworks(timestamp) {
+      // Création continue de feux d'artifice
       if (fireworksContinuous) {
         if (!lastFireworkTime || timestamp - lastFireworkTime > FIREWORK_INTERVAL) {
           createFirework();
@@ -573,18 +601,24 @@
       ctx.globalAlpha = 1;
     }
 
-    // --------------------- BOUCLE D’ANIMATION -----------------------
+    // =========================================================
+    //  BOUCLE D’ANIMATION PRINCIPALE
+    // =========================================================
     function animate(timestamp) {
+      // Effacer le canvas
       ctx.clearRect(0, 0, width, height);
 
+      // Neige
       drawSnow();
 
+      // Étoiles filantes
       if (!lastShootingStar || timestamp - lastShootingStar > SHOOTING_INTERVAL) {
         createShootingStar();
         lastShootingStar = timestamp;
       }
       drawShootingStars();
 
+      // Feux d’artifice
       drawFireworks(timestamp);
 
       requestAnimationFrame(animate);
