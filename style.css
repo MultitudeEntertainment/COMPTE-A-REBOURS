@@ -10,34 +10,36 @@ body {
     overflow: hidden;
 }
 
-.container {
+#countdown {
+    display: flex;
+    gap: 40px;
     text-align: center;
     z-index: 2;
 }
 
-#countdown {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.box {
-    width: 120px;
-    height: 120px;
-    background: #111;
-    border: 2px solid #00eaff;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 32px;
+.digit {
+    font-size: 80px;
     font-weight: bold;
+    padding: 25px 35px;
+    border-radius: 15px;
+    background: #111;
+    border: 4px solid red;
+    animation: guirlande 2s infinite;
 }
 
-.box small {
-    font-size: 14px;
-    opacity: 0.7;
+.digit small {
+    display: block;
+    font-size: 20px;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Effet guirlande RGB qui scintille */
+@keyframes guirlande {
+    0%   { box-shadow: 0 0 25px red;   border-color: red; }
+    33%  { box-shadow: 0 0 25px green; border-color: green; }
+    66%  { box-shadow: 0 0 25px blue;  border-color: blue; }
+    100% { box-shadow: 0 0 25px red;   border-color: red; }
 }
 
 #fireworks {
@@ -49,4 +51,3 @@ body {
     pointer-events: none;
     z-index: 1;
 }
-
