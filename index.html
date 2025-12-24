@@ -8,6 +8,9 @@
   <style>
     /* =========================================================
        RESET DE BASE
+       ---------------------------------------------------------
+       On part d'une base propre : pas de marges ni de padding
+       par défaut, box-sizing en border-box pour tout le monde.
     ========================================================== */
     * {
       margin: 0;
@@ -21,6 +24,12 @@
       height: 100%;
     }
 
+    /* =========================================================
+       FOND GLOBAL
+       ---------------------------------------------------------
+       Un fond de nuit légèrement bleuté, avec un dégradé radial
+       vers le noir, pour donner une vraie ambiance "ciel de nuit".
+    ========================================================== */
     body {
       background:
         radial-gradient(circle at 20% 20%, #1d294d 0, #050815 40%, #000000 90%);
@@ -32,6 +41,9 @@
 
     /* =========================================================
        SCÈNE PRINCIPALE
+       ---------------------------------------------------------
+       Conteneur plein écran, centré, qui contient le canvas
+       des effets et le contenu (compte à rebours + texte).
     ========================================================== */
     .scene {
       position: relative;
@@ -44,7 +56,14 @@
       overflow: hidden;
     }
 
-    /* Canvas pour neige + étoiles + feux d’artifice */
+    /* =========================================================
+       CANVAS
+       ---------------------------------------------------------
+       Canvas en plein écran, derrière le contenu, pour :
+       - neige
+       - étoiles filantes
+       - feux d'artifice
+    ========================================================== */
     #effectsCanvas {
       position: absolute;
       inset: 0;
@@ -56,7 +75,10 @@
     }
 
     /* =========================================================
-       LUNE 2026 (style proche de ton image)
+       LUNE 2026
+       ---------------------------------------------------------
+       Disque blanc très lumineux, proche de ton image,
+       avec "2026" au centre.
     ========================================================== */
     .moon {
       position: absolute;
@@ -116,6 +138,9 @@
 
     /* =========================================================
        CONTENU CENTRAL
+       ---------------------------------------------------------
+       Conteneur du texte, pour garder le compte à rebours
+       et le message de Noël bien centrés.
     ========================================================== */
     .content {
       position: relative;
@@ -136,7 +161,14 @@
       opacity: 0.9;
     }
 
-    /* ---- Bloc compteur ---- */
+    /* =========================================================
+       COMPTE À REBOURS
+       ---------------------------------------------------------
+       - Cadre propre, sans néon agressif
+       - Légère transparence + blur
+       - Chiffres qui changent doucement de couleur
+         rouge → vert → bleu, effet guirlande.
+    ========================================================== */
     .countdown {
       font-size: clamp(3rem, 7vw, 5.5rem);
       font-weight: 700;
@@ -144,50 +176,41 @@
       text-transform: uppercase;
       padding: 1.2rem 2.6rem;
       border-radius: 999px;
-      background: rgba(1, 4, 15, 0.85);
-      border: 3px solid rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(14px);
-      box-shadow:
-        0 0 30px rgba(0, 0, 0, 0.9),
-        0 0 40px rgba(0, 120, 255, 0.55);
+      background: rgba(0, 0, 0, 0.55);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
       display: inline-block;
       position: relative;
-      overflow: hidden;
-      animation: glow-pulse 3.4s infinite ease-in-out;
-    }
-
-    .countdown::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        conic-gradient(
-          from 0deg,
-          #ff1a1a,
-          #ffb300,
-          #27ff5f,
-          #00e5ff,
-          #ff3eff,
-          #ff1a1a
-        );
-      mix-blend-mode: screen;
-      opacity: 0.26;
-      animation: garland-spin 12s linear infinite;
     }
 
     .countdown-text {
-      position: relative;
-      z-index: 1;
       display: inline-block;
-      animation: twinkle 1.8s infinite alternate ease-in-out;
-      text-shadow:
-        0 0 8px rgba(255, 255, 255, 1),
-        0 0 18px rgba(255, 80, 80, 0.9),
-        0 0 32px rgba(0, 180, 255, 0.9);
+      animation: guirlande 1.6s infinite linear;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    }
+
+    /* Animation de couleur douce pour les chiffres :
+       rouge → vert → bleu → rouge */
+    @keyframes guirlande {
+      0% {
+        color: #ff3b3b;
+      }
+      33% {
+        color: #3bff3b;
+      }
+      66% {
+        color: #3bb3ff;
+      }
+      100% {
+        color: #ff3b3b;
+      }
     }
 
     /* =========================================================
        MESSAGE JOYEUX NOËL
+       ---------------------------------------------------------
+       Apparait quand le compte à rebours a terminé.
+       Avec un style plus intense + guirlande lumineuse.
     ========================================================== */
     .christmas-message {
       font-size: clamp(3rem, 7vw, 5.5rem);
@@ -240,23 +263,8 @@
     }
 
     /* =========================================================
-       ANIMATIONS GÉNÉRALES
+       ANIMATIONS GÉNÉRALES (utilisées par le message)
     ========================================================== */
-    @keyframes twinkle {
-      0% {
-        opacity: 0.7;
-        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7));
-      }
-      50% {
-        opacity: 1;
-        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
-      }
-      100% {
-        opacity: 0.78;
-        filter: drop-shadow(0 0 6px rgba(255, 150, 150, 0.9));
-      }
-    }
-
     @keyframes twinkle-fast {
       0% {
         opacity: 0.6;
@@ -269,24 +277,6 @@
       100% {
         opacity: 0.82;
         filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95));
-      }
-    }
-
-    @keyframes glow-pulse {
-      0% {
-        box-shadow:
-          0 0 22px rgba(0, 0, 0, 0.9),
-          0 0 24px rgba(0, 120, 255, 0.40);
-      }
-      50% {
-        box-shadow:
-          0 0 28px rgba(0, 0, 0, 0.95),
-          0 0 48px rgba(0, 180, 255, 0.95);
-      }
-      100% {
-        box-shadow:
-          0 0 22px rgba(0, 0, 0, 0.9),
-          0 0 24px rgba(0, 120, 255, 0.40);
       }
     }
 
@@ -358,8 +348,13 @@
   </style>
 </head>
 <body>
+  <!-- =========================================================
+       SCÈNE
+       ---------------------------------------------------------
+       Canvas derrière + Lune + Contenu central.
+  ========================================================== -->
   <div class="scene">
-    <!-- Canvas pour neige, étoiles filantes et feux d’artifice -->
+    <!-- Canvas pour neige, étoiles filantes, feux d’artifice -->
     <canvas id="effectsCanvas"></canvas>
 
     <!-- Lune 2026 -->
@@ -392,6 +387,7 @@
       const countdownTextEl = document.getElementById("countdownText");
       const christmasMessageEl = document.getElementById("christmasMessage");
 
+      // Renvoie la date du prochain Noël (25 décembre à minuit)
       function getNextChristmas() {
         const now = new Date();
         const currentYear = now.getFullYear();
@@ -413,9 +409,10 @@
         const diff = targetDate - now;
 
         if (diff <= 0) {
+          // C'est Noël : on affiche JOYEUX NOËL et on déclenche les feux d'artifice continus
           countdownEl.style.display = "none";
           christmasMessageEl.style.display = "inline-block";
-          startFireworks(); // feux d’artifice en mode JOYEUX NOËL (continu)
+          startFireworksContinuous();
           return;
         }
 
@@ -479,22 +476,19 @@
     const SHOOTING_INTERVAL = 5000; // toutes les 5 secondes
 
     function createShootingStar() {
-      const startX = Math.random() * width;          // position horizontale aléatoire
-      const startY = Math.random() * height * 0.3;   // zone haute du ciel
-      const length = 250 + Math.random() * 150;      // longueur de la traînée
-
       shootingStars.push({
-        x: startX,
-        y: startY,
-        vx: 8 + Math.random() * 4,
-        vy: 4 + Math.random() * 2,
+        x: Math.random() * width,
+        y: Math.random() * height * 0.3, // haut du ciel
+        vx: 14 + Math.random() * 6,
+        vy: 6 + Math.random() * 3,
         life: 0,
-        maxLife: 40,
-        length
+        maxLife: 30,
+        length: 300
       });
     }
 
     function drawShootingStars() {
+      ctx.save();
       for (let i = shootingStars.length - 1; i >= 0; i--) {
         const s = shootingStars[i];
 
@@ -502,12 +496,11 @@
           s.x, s.y,
           s.x - s.length, s.y - s.length * 0.4
         );
-        grad.addColorStop(0, "rgba(255,255,255,0.0)");
-        grad.addColorStop(0.3, "rgba(255,255,255,0.3)");
-        grad.addColorStop(1, "rgba(255,255,255,0.9)");
+        grad.addColorStop(0, "rgba(255,255,255,0)");
+        grad.addColorStop(1, "rgba(255,255,255,1)");
 
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(s.x - s.length, s.y - s.length * 0.4);
@@ -521,22 +514,28 @@
           shootingStars.splice(i, 1);
         }
       }
+      ctx.restore();
     }
 
-    // ------------------------ FEUX D’ARTIFICE DE BASE ------------------------
+    // ------------------------ FEUX D’ARTIFICE ------------------------
     let fireworks = [];
-    let fireworksActive = false; // mode Noël "JOYEUX NOËL" (continu)
+
+    // Mode continu (quand Noël est atteint)
+    let fireworksContinuous = false;
+
+    // Gestion de la cadence des explosions
     let lastFireworkTime = 0;
     const FIREWORK_INTERVAL = 800; // intervalle entre explosions dans un groupe
 
-    function startFireworks() {
-      fireworksActive = true; // utilisé quand Noël est arrivé
+    function startFireworksContinuous() {
+      fireworksContinuous = true;
     }
 
     function createFirework() {
       const x = Math.random() * width * 0.8 + width * 0.1;
       const y = Math.random() * height * 0.4 + height * 0.1;
       const particles = [];
+
       const colors = [
         "#ff3b3b",
         "#ffd93b",
@@ -597,9 +596,10 @@
 
     // --------------------- BOUCLE D’ANIMATION -----------------------
     function animate(timestamp) {
+      // Fond de canvas nettoyé
       ctx.clearRect(0, 0, width, height);
 
-      // Neige
+      // ---------------- NEIGE ----------------
       ctx.save();
       ctx.fillStyle = "#ffffff";
       for (const flake of snowflakes) {
@@ -621,26 +621,26 @@
       }
       ctx.restore();
 
-      // Étoiles filantes (toutes les 5 secondes)
+      // ---------------- ÉTOILES FILANTES ----------------
       if (!lastShootingStar || timestamp - lastShootingStar > SHOOTING_INTERVAL) {
         createShootingStar();
         lastShootingStar = timestamp;
       }
       drawShootingStars();
 
-      // Feux d’artifice (mode JOYEUX NOËL en continu)
-      if (fireworksActive) {
+      // ---------------- FEUX D’ARTIFICE CONTINUS (mode Noël) ----------------
+      if (fireworksContinuous) {
         if (!lastFireworkTime || timestamp - lastFireworkTime > FIREWORK_INTERVAL) {
           createFirework();
           lastFireworkTime = timestamp;
         }
       }
 
-      // Feux d’artifice programmés (10s toutes les 30s)
+      // ---------------- FEUX D’ARTIFICE PROGRAMMÉS ----------------
       updateAutoFireworks(timestamp);
 
-      // Mise à jour des particules de feux d’artifice
-      const gravity = 0.05;
+      // ---------------- RENDU DES PARTICULES DE FEUX D’ARTIFICE ----------------
+      const gravity = 0.04;
       for (let i = fireworks.length - 1; i >= 0; i--) {
         const fw = fireworks[i];
 
@@ -652,13 +652,12 @@
           p.vy += gravity;
           p.life++;
 
-          const lifeRatio = p.life / p.maxLife;
-          const alpha = Math.max(1 - lifeRatio, 0);
+          const alpha = 1 - p.life / p.maxLife;
 
           ctx.globalAlpha = alpha;
           ctx.fillStyle = p.color;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, 2.3, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, 3.2, 0, Math.PI * 2);
           ctx.fill();
 
           if (p.life > p.maxLife) {
@@ -670,6 +669,9 @@
           fireworks.splice(i, 1);
         }
       }
+
+      // Toujours réinitialiser l'alpha pour les prochaines passes
+      ctx.globalAlpha = 1;
 
       requestAnimationFrame(animate);
     }
