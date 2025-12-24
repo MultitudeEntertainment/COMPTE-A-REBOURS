@@ -44,7 +44,7 @@
       overflow: hidden;
     }
 
-    /* Canvas pour neige + feux d’artifice */
+    /* Canvas pour neige + étoiles + feux d’artifice */
     #effectsCanvas {
       position: absolute;
       inset: 0;
@@ -56,8 +56,7 @@
     }
 
     /* =========================================================
-       LUNE 2026
-       (Style inspiré de ton image : disque blanc très lumineux)
+       LUNE 2026 (style proche de ton image)
     ========================================================== */
     .moon {
       position: absolute;
@@ -76,9 +75,9 @@
       justify-content: center;
       z-index: 2;
       overflow: hidden;
+      animation: moon-drift 8s ease-in-out infinite;
     }
 
-    /* léger halo interne pour rappeler un disque brillant */
     .moon::before {
       content: "";
       position: absolute;
@@ -103,7 +102,6 @@
       transform: translateY(3px);
     }
 
-    /* léger flottement de la lune pour donner de la vie */
     @keyframes moon-drift {
       0% {
         transform: translateY(0px);
@@ -114,10 +112,6 @@
       100% {
         transform: translateY(0px);
       }
-    }
-
-    .moon {
-      animation: moon-drift 8s ease-in-out infinite;
     }
 
     /* =========================================================
@@ -142,7 +136,7 @@
       opacity: 0.9;
     }
 
-    /* ---- Bloc compteur (fond, bord, halo) ---- */
+    /* ---- Bloc compteur ---- */
     .countdown {
       font-size: clamp(3rem, 7vw, 5.5rem);
       font-weight: 700;
@@ -162,7 +156,6 @@
       animation: glow-pulse 3.4s infinite ease-in-out;
     }
 
-    /* Guirlande lumineuse (halo coloré qui tourne) */
     .countdown::before {
       content: "";
       position: absolute;
@@ -247,7 +240,7 @@
     }
 
     /* =========================================================
-       ANIMATIONS (scintillement, halo, etc.)
+       ANIMATIONS GÉNÉRALES
     ========================================================== */
     @keyframes twinkle {
       0% {
@@ -366,7 +359,7 @@
 </head>
 <body>
   <div class="scene">
-    <!-- Canvas pour neige + feux d’artifice -->
+    <!-- Canvas pour neige, étoiles filantes et feux d’artifice -->
     <canvas id="effectsCanvas"></canvas>
 
     <!-- Lune 2026 -->
@@ -399,7 +392,6 @@
       const countdownTextEl = document.getElementById("countdownText");
       const christmasMessageEl = document.getElementById("christmasMessage");
 
-      // Renvoie l’objet Date du prochain Noël (minuit le 25/12)
       function getNextChristmas() {
         const now = new Date();
         const currentYear = now.getFullYear();
@@ -421,10 +413,9 @@
         const diff = targetDate - now;
 
         if (diff <= 0) {
-          // C’est Noël : on affiche le message, on cache le compte à rebours, on démarre les feux d’artifice
           countdownEl.style.display = "none";
           christmasMessageEl.style.display = "inline-block";
-          startFireworks();
+          startFireworks(); // feux d’artifice en mode JOYEUX NOËL (continu)
           return;
         }
 
@@ -446,7 +437,7 @@
     })();
 
     // =========================================================
-    //  NEIGE + FEUX D’ARTIFICE
+    //  NEIGE + ÉTOILES FILANTES + FEUX D’ARTIFICE
     // =========================================================
     const canvas = document.getElementById("effectsCanvas");
     const ctx = canvas.getContext("2d");
@@ -482,14 +473,64 @@
       snowflakes.push(createSnowflake());
     }
 
-    // ------------------------ FEUX D’ARTIFICE ------------------------
+    // ----------------------------- ÉTOILES FILANTES -----------------------------
+    let shootingStars = [];
+    let lastShootingStar = 0;
+    const SHOOTING_INTERVAL = 5000; // toutes les 5 secondes
+
+    function createShootingStar() {
+      const startX = Math.random() * width;          // position horizontale aléatoire
+      const startY = Math.random() * height * 0.3;   // zone haute du ciel
+      const length = 250 + Math.random() * 150;      // longueur de la traînée
+
+      shootingStars.push({
+        x: startX,
+        y: startY,
+        vx: 8 + Math.random() * 4,
+        vy: 4 + Math.random() * 2,
+        life: 0,
+        maxLife: 40,
+        length
+      });
+    }
+
+    function drawShootingStars() {
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const s = shootingStars[i];
+
+        const grad = ctx.createLinearGradient(
+          s.x, s.y,
+          s.x - s.length, s.y - s.length * 0.4
+        );
+        grad.addColorStop(0, "rgba(255,255,255,0.0)");
+        grad.addColorStop(0.3, "rgba(255,255,255,0.3)");
+        grad.addColorStop(1, "rgba(255,255,255,0.9)");
+
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.length, s.y - s.length * 0.4);
+        ctx.stroke();
+
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life++;
+
+        if (s.life > s.maxLife) {
+          shootingStars.splice(i, 1);
+        }
+      }
+    }
+
+    // ------------------------ FEUX D’ARTIFICE DE BASE ------------------------
     let fireworks = [];
-    let fireworksActive = false;
+    let fireworksActive = false; // mode Noël "JOYEUX NOËL" (continu)
     let lastFireworkTime = 0;
-    const FIREWORK_INTERVAL = 800; // en ms
+    const FIREWORK_INTERVAL = 800; // intervalle entre explosions dans un groupe
 
     function startFireworks() {
-      fireworksActive = true;
+      fireworksActive = true; // utilisé quand Noël est arrivé
     }
 
     function createFirework() {
@@ -525,11 +566,40 @@
       fireworks.push({ particles });
     }
 
+    // ----------------------------- FEUX D’ARTIFICE PROGRAMMÉS -----------------------------
+    let autoFireworks = false;
+    let autoFireworkStart = 0;
+    let lastAutoFirework = 0;
+    const AUTO_FIREWORK_INTERVAL = 30000; // toutes les 30 secondes
+    const AUTO_FIREWORK_DURATION = 10000; // durent 10 secondes
+
+    function updateAutoFireworks(timestamp) {
+      // Démarrer un cycle toutes les 30 secondes
+      if (timestamp - lastAutoFirework > AUTO_FIREWORK_INTERVAL) {
+        autoFireworks = true;
+        autoFireworkStart = timestamp;
+        lastAutoFirework = timestamp;
+      }
+
+      // Arrêter après 10 secondes
+      if (autoFireworks && timestamp - autoFireworkStart > AUTO_FIREWORK_DURATION) {
+        autoFireworks = false;
+      }
+
+      // Pendant la fenêtre active → créer des feux d’artifice
+      if (autoFireworks) {
+        if (!lastFireworkTime || timestamp - lastFireworkTime > FIREWORK_INTERVAL) {
+          createFirework();
+          lastFireworkTime = timestamp;
+        }
+      }
+    }
+
     // --------------------- BOUCLE D’ANIMATION -----------------------
     function animate(timestamp) {
       ctx.clearRect(0, 0, width, height);
 
-      // --- Neige ---
+      // Neige
       ctx.save();
       ctx.fillStyle = "#ffffff";
       for (const flake of snowflakes) {
@@ -551,43 +621,53 @@
       }
       ctx.restore();
 
-      // --- Feux d’artifice si activés ---
+      // Étoiles filantes (toutes les 5 secondes)
+      if (!lastShootingStar || timestamp - lastShootingStar > SHOOTING_INTERVAL) {
+        createShootingStar();
+        lastShootingStar = timestamp;
+      }
+      drawShootingStars();
+
+      // Feux d’artifice (mode JOYEUX NOËL en continu)
       if (fireworksActive) {
         if (!lastFireworkTime || timestamp - lastFireworkTime > FIREWORK_INTERVAL) {
           createFirework();
           lastFireworkTime = timestamp;
         }
+      }
 
-        const gravity = 0.05;
+      // Feux d’artifice programmés (10s toutes les 30s)
+      updateAutoFireworks(timestamp);
 
-        for (let i = fireworks.length - 1; i >= 0; i--) {
-          const fw = fireworks[i];
+      // Mise à jour des particules de feux d’artifice
+      const gravity = 0.05;
+      for (let i = fireworks.length - 1; i >= 0; i--) {
+        const fw = fireworks[i];
 
-          for (let j = fw.particles.length - 1; j >= 0; j--) {
-            const p = fw.particles[j];
+        for (let j = fw.particles.length - 1; j >= 0; j--) {
+          const p = fw.particles[j];
 
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += gravity;
-            p.life++;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += gravity;
+          p.life++;
 
-            const lifeRatio = p.life / p.maxLife;
-            const alpha = Math.max(1 - lifeRatio, 0);
+          const lifeRatio = p.life / p.maxLife;
+          const alpha = Math.max(1 - lifeRatio, 0);
 
-            ctx.globalAlpha = alpha;
-            ctx.fillStyle = p.color;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, 2.3, 0, Math.PI * 2);
-            ctx.fill();
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2.3, 0, Math.PI * 2);
+          ctx.fill();
 
-            if (p.life > p.maxLife) {
-              fw.particles.splice(j, 1);
-            }
+          if (p.life > p.maxLife) {
+            fw.particles.splice(j, 1);
           }
+        }
 
-          if (fw.particles.length === 0) {
-            fireworks.splice(i, 1);
-          }
+        if (fw.particles.length === 0) {
+          fireworks.splice(i, 1);
         }
       }
 
