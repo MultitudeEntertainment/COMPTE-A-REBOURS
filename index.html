@@ -7,23 +7,30 @@
 </head>
 <body>
 
-<!-- Décor -->
-<div id="mountains"></div>
-<div id="forest"></div>
+<div id="scene">
+    <!-- Décor -->
+    <div id="mountains"></div>
+    <div id="forest"></div>
 
-<!-- Neige -->
-<canvas id="snow"></canvas>
+    <!-- Neige -->
+    <canvas id="snow"></canvas>
 
-<!-- Compte à rebours -->
-<div id="countdown">
-    <div class="digit"><span id="days">00</span><small>Jours</small></div>
-    <div class="digit"><span id="hours">00</span><small>Heures</small></div>
-    <div class="digit"><span id="minutes">00</span><small>Minutes</small></div>
-    <div class="digit"><span id="seconds">00</span><small>Secondes</small></div>
+    <!-- Feux d’artifice -->
+    <canvas id="fireworks"></canvas>
+
+    <!-- Compte à rebours au centre -->
+    <div id="countdown">
+        <div id="time">
+            <span id="days">00</span>:
+            <span id="hours">00</span>:
+            <span id="minutes">00</span>:
+            <span id="seconds">00</span>
+        </div>
+        <div id="labels">
+            Jours &nbsp; Heures &nbsp; Minutes &nbsp; Secondes
+        </div>
+    </div>
 </div>
-
-<!-- Feux d’artifice -->
-<canvas id="fireworks"></canvas>
 
 <script src="script.js"></script>
 </body>
