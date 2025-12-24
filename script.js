@@ -90,4 +90,43 @@ function startFireworks() {
 
   function createFirework() {
     const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height * 
+    const y = Math.random() * canvas.height * 0.5;
+
+    for (let i = 0; i < 50; i++) {
+      particles.push({
+        x,
+        y,
+        angle: Math.random() * Math.PI * 2,
+        speed: Math.random() * 3 + 1,
+        radius: Math.random() * 2 + 1,
+        alpha: 1,
+        decay: Math.random() * 0.02 + 0.01,
+        color: `hsl(${Math.random() * 360}, 100%, 60%)`
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+      p.x += Math.cos(p.angle) * p.speed;
+      p.y += Math.sin(p.angle) * p.speed;
+      p.alpha -= p.decay;
+
+      if (p.alpha <= 0) particles.splice(i, 1);
+
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    if (Math.random() < 0.05) createFirework();
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+}
