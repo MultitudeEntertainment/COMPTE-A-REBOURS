@@ -119,14 +119,4 @@ function startFireworks() {
       ctx.globalAlpha = p.alpha;
       ctx.fillStyle = p.color;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    if (Math.random() < 0.05) createFirework();
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-}
+      ctx.arc(p
