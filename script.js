@@ -6,7 +6,8 @@ function updateCountdown() {
     const diff = targetDate - now;
 
     if (diff <= 0) {
-        document.getElementById("countdown").innerHTML = "<h1 style='font-size:6vw;'>C'est Noël ! 🎄</h1>";
+        document.getElementById("countdown").innerHTML =
+            "<h1 style='font-size:6vw; animation: guirlande 2.5s infinite;'>C'est Noël ! 🎄</h1>";
         startFireworks();
         return;
     }
