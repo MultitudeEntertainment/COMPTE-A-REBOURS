@@ -6,7 +6,7 @@ function updateCountdown() {
     const diff = targetDate - now;
 
     if (diff <= 0) {
-        document.getElementById("countdown").innerHTML = "<h1>C'est Noël ! 🎄</h1>";
+        document.getElementById("countdown").innerHTML = "<h1 style='font-size:6vw;'>C'est Noël ! 🎄</h1>";
         startFireworks();
         return;
     }
@@ -30,11 +30,14 @@ updateCountdown();
 const snowCanvas = document.getElementById("snow");
 const snowCtx = snowCanvas.getContext("2d");
 
-snowCanvas.width = window.innerWidth;
-snowCanvas.height = window.innerHeight;
+function resizeSnow() {
+    snowCanvas.width = window.innerWidth;
+    snowCanvas.height = window.innerHeight;
+}
+resizeSnow();
+window.addEventListener("resize", resizeSnow);
 
 const flakes = [];
-
 for (let i = 0; i < 150; i++) {
     flakes.push({
         x: Math.random() * snowCanvas.width,
@@ -78,8 +81,12 @@ function startFireworks() {
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    function resizeFw() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeFw();
+    window.addEventListener("resize", resizeFw);
 
     const particles = [];
 
