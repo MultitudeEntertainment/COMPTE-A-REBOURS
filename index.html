@@ -1,37 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Compte à rebours</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Compte à rebours</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="scene">
+  <div id="mountains"></div>
+  <div id="forest"></div>
+  <canvas id="snow"></canvas>
+  <canvas id="fireworks"></canvas>
 
-    <!-- Décor -->
-    <div id="mountains"></div>
-    <div id="forest"></div>
-
-    <!-- Neige -->
-    <canvas id="snow"></canvas>
-
-    <!-- Feux d’artifice -->
-    <canvas id="fireworks"></canvas>
-
-    <!-- Compte à rebours -->
-    <div id="countdown">
-        <div id="time">
-            <span id="days">00</span> :
-            <span id="hours">00</span> :
-            <span id="minutes">00</span> :
-            <span id="seconds">00</span>
-        </div>
-        <div id="labels">
-            Jours &nbsp;&nbsp; Heures &nbsp;&nbsp; Minutes &nbsp;&nbsp; Secondes
-        </div>
+  <div id="countdown">
+    <div id="time">
+      <span id="days">00</span> :
+      <span id="hours">00</span> :
+      <span id="minutes">00</span> :
+      <span id="seconds">00</span>
     </div>
-
+    <div id="labels">
+      Jours · Heures · Minutes · Secondes
+    </div>
+  </div>
 </div>
 
 <script src="script.js"></script>
