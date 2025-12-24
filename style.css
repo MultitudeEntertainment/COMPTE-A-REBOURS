@@ -13,7 +13,7 @@ body {
   height: 100%;
 }
 
-/* Étoiles */
+/* Ciel étoilé */
 #scene::before {
   content: "";
   position: absolute;
@@ -56,7 +56,7 @@ body {
   z-index: 2;
 }
 
-/* Compte à rebours */
+/* Compte à rebours centré sur une ligne */
 #countdown {
   position: absolute;
   top: 50%;
@@ -65,9 +65,9 @@ body {
   z-index: 10;
 }
 
-#time {
+#line {
   font-family: "Courier New", monospace;
-  font-size: 7vw;
+  font-size: 8vw;
   font-weight: bold;
   white-space: nowrap;
   animation: guirlande 2.5s infinite;
@@ -79,7 +79,7 @@ body {
   opacity: 0.85;
 }
 
-/* RGB scintillant */
+/* Guirlande RGB */
 @keyframes guirlande {
   0%   { text-shadow: 0 0 28px red;   color: red; }
   33%  { text-shadow: 0 0 28px lime;  color: lime; }
@@ -87,6 +87,7 @@ body {
   100% { text-shadow: 0 0 28px red;   color: red; }
 }
 
+/* Neige + feux d’artifice */
 #snow, #fireworks {
   position: absolute;
   inset: 0;
