@@ -3,7 +3,7 @@ body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background: radial-gradient(circle at top, #0a0a1a 0%, #000 70%);
+    background: radial-gradient(circle at top, #111633 0%, #000 70%);
     font-family: Arial, sans-serif;
     color: white;
 }
@@ -39,7 +39,7 @@ body {
 #scene::after {
     content: "2026";
     position: absolute;
-    top: 6%;
+    top: 7%;
     right: 8%;
     width: 200px;
     height: 200px;
@@ -53,70 +53,71 @@ body {
     line-height: 200px;
     letter-spacing: 4px;
     text-shadow: inset 0 0 12px #000;
-    opacity: 0.85;
+    opacity: 0.9;
     z-index: 2;
 }
 
-/* --- MONTAGNES (PLUS GRANDES + PLUS VISIBLES) --- */
+/* --- MONTAGNES PLUS VISIBLES --- */
 #mountains {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 55vh;
-    background: #1c1c1c;
+    height: 45vh;
+    background: linear-gradient(to top, #202020 0%, #3a3a3a 60%, #555 100%);
     clip-path: polygon(
-        0% 100%, 8% 50%, 15% 70%, 25% 45%, 35% 65%,
-        45% 40%, 55% 68%, 65% 45%, 75% 75%, 85% 50%, 100% 100%
+        0% 100%, 8% 60%, 15% 75%, 25% 50%, 35% 70%,
+        45% 45%, 55% 72%, 65% 48%, 75% 78%, 85% 55%, 100% 100%
     );
     z-index: 3;
 }
 
-/* --- FORÊT (devant les montagnes) --- */
+/* --- FORÊT PLUS DÉCOUPÉE, MAIS PLUS BASSE --- */
 #forest {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 30vh;
-    background: #0a0a0a;
+    height: 22vh;
+    background: #050505;
     clip-path: polygon(
-        0% 100%, 5% 70%, 10% 85%, 15% 65%, 20% 90%,
-        25% 60%, 30% 80%, 35% 55%, 40% 85%, 45% 60%,
-        50% 90%, 55% 65%, 60% 85%, 65% 60%, 70% 90%,
-        75% 65%, 80% 85%, 85% 60%, 90% 90%, 95% 70%, 100% 100%
+        0% 100%, 5% 68%, 10% 84%, 15% 64%, 20% 88%,
+        25% 60%, 30% 80%, 35% 55%, 40% 84%, 45% 60%,
+        50% 88%, 55% 64%, 60% 84%, 65% 60%, 70% 88%,
+        75% 64%, 80% 84%, 85% 60%, 90% 88%, 95% 68%, 100% 100%
     );
     z-index: 4;
 }
 
-/* --- COMPTE À REBOURS CENTRÉ --- */
+/* --- COMPTE À REBOURS BIEN CENTRÉ --- */
 #countdown {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -52%); /* très léger ajustement vertical */
     text-align: center;
     z-index: 10;
 }
 
-/* --- TEXTE GÉANT + GUIRLANDE RGB --- */
+/* Pour que tout soit bien droit et régulier */
 #time {
-    font-size: 9vw;
+    font-family: "Courier New", monospace;  /* largeur fixe = alignement propre */
+    font-size: 8.5vw;
     font-weight: bold;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.1em;
     animation: guirlande 2.5s infinite;
 }
 
 #labels {
     margin-top: 15px;
     font-size: 1.4vw;
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 /* Effet guirlande RGB */
 @keyframes guirlande {
-    0%   { text-shadow: 0 0 35px red;   color: red; }
-    33%  { text-shadow: 0 0 35px green; color: green; }
-    66%  { text-shadow: 0 0 35px blue;  color: blue; }
-    100% { text-shadow: 0 0 35px red;   color: red; }
+    0%   { text-shadow: 0 0 28px red;   color: red; }
+    33%  { text-shadow: 0 0 28px lime;  color: lime; }
+    66%  { text-shadow: 0 0 28px deepskyblue; color: deepskyblue; }
+    100% { text-shadow: 0 0 28px red;   color: red; }
 }
 
 /* Neige */
