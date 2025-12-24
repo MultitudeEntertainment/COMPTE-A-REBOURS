@@ -2,16 +2,14 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Compte à rebours Réveillon & Noël 2025</title>
+  <title>JOYEUX NOËL 2025</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
     /* =========================================================
        RESET DE BASE
        ---------------------------------------------------------
-       On nettoie la base pour avoir un rendu maîtrisé :
-       - pas de marges ni padding par défaut
-       - box-sizing: border-box partout
+       On nettoie tout pour partir d'un rendu contrôlé
     ========================================================== */
     * {
       margin: 0;
@@ -28,12 +26,8 @@
     /* =========================================================
        FOND GLOBAL
        ---------------------------------------------------------
-       Ciel de nuit légèrement bleuté, plus noir sur les bords.
-       L'ambiance sert de base pour :
-       - lune
-       - neige
-       - étoiles filantes
-       - feux d'artifice
+       Ciel de nuit légèrement bleuté qui tombe vers du noir
+       pour servir de base au décor de Noël
     ========================================================== */
     body {
       background:
@@ -47,11 +41,10 @@
     /* =========================================================
        SCÈNE PRINCIPALE
        ---------------------------------------------------------
-       Conteneur plein écran qui englobe :
-       - canvas des effets visuels
-       - lune
-       - bandeau "Joyeux Réveillon"
-       - compte à rebours / message Noël
+       Conteneur plein écran pour :
+       - Canvas (neige, étoiles filantes, feux d'artifice)
+       - Lune
+       - Texte JOYEUX NOËL en boucle
     ========================================================== */
     .scene {
       position: relative;
@@ -65,9 +58,12 @@
     }
 
     /* =========================================================
-       CANVAS (NEIGE / ÉTOILES / FEUX D'ARTIFICE)
+       CANVAS EFFETS VISUELS
        ---------------------------------------------------------
-       Le canvas occupe tout l'écran, derrière le contenu texte.
+       Dessus :
+       - neige qui tombe
+       - étoiles filantes
+       - feux d’artifice permanents (boucle)
     ========================================================== */
     #effectsCanvas {
       position: absolute;
@@ -82,8 +78,8 @@
     /* =========================================================
        LUNE 2025
        ---------------------------------------------------------
-       Disque blanc très lumineux, proche de ton image, avec
-       "2025" gravé au centre.
+       Disque blanc très lumineux, avec "2025" gravé,
+       comme une lune symbolique de l'année.
     ========================================================== */
     .moon {
       position: absolute;
@@ -142,109 +138,9 @@
     }
 
     /* =========================================================
-       BANDEAU "JOYEUX RÉVEILLON"
-       ---------------------------------------------------------
-       - Apparaît en haut de l'écran toutes les 40 secondes
-       - Reste affiché pendant 10 secondes
-       - Animations magiques (apparition / glow)
-       - Disparaît entièrement à minuit (mode Noël)
-    ========================================================== */
-    .reveillon-banner-wrapper {
-      position: absolute;
-      top: 3%;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 4;
-      pointer-events: none;
-    }
-
-    .reveillon-banner {
-      position: relative;
-      display: inline-block;
-      padding: 0.7rem 1.8rem;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(10px);
-      opacity: 0;
-      transform: translateY(-20px) scale(0.9);
-      filter: blur(6px);
-      pointer-events: none;
-    }
-
-    .reveillon-banner-text {
-      position: relative;
-      font-size: 1.1rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #ffe7c7;
-      text-shadow:
-        0 0 6px rgba(255, 255, 255, 0.9),
-        0 0 14px rgba(255, 180, 70, 0.9),
-        0 0 22px rgba(255, 90, 90, 0.9);
-      white-space: nowrap;
-    }
-
-    /* État visible avec magie */
-    .reveillon-visible {
-      animation: reveillon-appear 0.8s forwards ease-out,
-                 reveillon-glow 2s infinite alternate ease-in-out;
-    }
-
-    /* État disparissant */
-    .reveillon-hide {
-      animation: reveillon-disappear 0.6s forwards ease-in;
-    }
-
-    @keyframes reveillon-appear {
-      0% {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.9);
-        filter: blur(6px);
-      }
-      60% {
-        opacity: 1;
-        transform: translateY(0px) scale(1.03);
-        filter: blur(1px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0px) scale(1);
-        filter: blur(0px);
-      }
-    }
-
-    @keyframes reveillon-disappear {
-      0% {
-        opacity: 1;
-        transform: translateY(0px) scale(1);
-        filter: blur(0px);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.9);
-        filter: blur(6px);
-      }
-    }
-
-    @keyframes reveillon-glow {
-      0% {
-        box-shadow:
-          0 0 8px rgba(255, 210, 130, 0.8),
-          0 0 16px rgba(255, 150, 70, 0.7);
-      }
-      100% {
-        box-shadow:
-          0 0 14px rgba(255, 230, 170, 1),
-          0 0 26px rgba(255, 140, 90, 1);
-      }
-    }
-
-    /* =========================================================
        CONTENU CENTRAL
        ---------------------------------------------------------
-       Conteneur du compte à rebours (avant minuit) ou
-       du message "JOYEUX NOËL" (après minuit).
+       Conteneur pour le texte JOYEUX NOËL
     ========================================================== */
     .content {
       position: relative;
@@ -261,65 +157,25 @@
       text-shadow:
         0 0 6px rgba(0, 180, 255, 0.7),
         0 0 16px rgba(0, 120, 255, 0.6);
-      margin-bottom: 1.4rem;
-      opacity: 0.9;
+      margin-bottom: 1.8rem;
+      opacity: 0.95;
     }
 
     /* =========================================================
-       COMPTE À REBOURS
+       JOYEUX NOËL (TEXTE PRINCIPAL)
        ---------------------------------------------------------
-       Cadre propre, sans néon agressif, avec effets de guirlande
-       sur les chiffres (couleurs qui tournent doucement).
-    ========================================================== */
-    .countdown {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 700;
-      letter-spacing: 0.17em;
-      text-transform: uppercase;
-      padding: 1.2rem 2.6rem;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.55);
-      border: 2px solid rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(10px);
-      display: inline-block;
-      position: relative;
-    }
-
-    .countdown-text {
-      display: inline-block;
-      animation: guirlande 1.6s infinite linear;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
-    }
-
-    @keyframes guirlande {
-      0% {
-        color: #ff3b3b;
-      }
-      33% {
-        color: #3bff3b;
-      }
-      66% {
-        color: #3bb3ff;
-      }
-      100% {
-        color: #ff3b3b;
-      }
-    }
-
-    /* =========================================================
-       MESSAGE JOYEUX NOËL
-       ---------------------------------------------------------
-       S'affiche à minuit (quand le compte à rebours est fini).
+       On ne fait plus de compte à rebours, juste
+       un JOYEUX NOËL qui tourne en boucle.
     ========================================================== */
     .christmas-message {
-      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-size: clamp(3.4rem, 8vw, 6rem);
       font-weight: 800;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 1.3rem 2.8rem;
+      padding: 1.5rem 3.2rem;
       border-radius: 999px;
       background:
-        radial-gradient(circle at 30% 0, rgba(255, 255, 255, 0.4), rgba(130, 0, 0, 0.98));
+        radial-gradient(circle at 30% 0, rgba(255, 255, 255, 0.35), rgba(130, 0, 0, 0.98));
       border: 3px solid rgba(255, 255, 255, 0.6);
       box-shadow:
         0 0 20px rgba(0, 0, 0, 0.95),
@@ -327,7 +183,7 @@
         0 0 70px rgba(0, 255, 120, 1);
       position: relative;
       overflow: hidden;
-      display: none;
+      display: inline-block;
       animation: glow-pulse-strong 2.4s infinite ease-in-out;
     }
 
@@ -342,6 +198,7 @@
       z-index: 0;
     }
 
+    /* Guirlande lumineuse circulaire autour du bloc */
     .christmas-message::before {
       content: "";
       position: absolute;
@@ -372,7 +229,9 @@
         0 0 18px rgba(255, 0, 0, 0.9),
         0 0 28px rgba(0, 255, 120, 0.9),
         0 0 40px rgba(255, 255, 255, 0.8);
-      animation: twinkle-fast 1.3s infinite alternate ease-in-out;
+      animation:
+        twinkle-fast 1.3s infinite alternate ease-in-out,
+        christmas-colors 3.6s infinite linear;
     }
 
     @keyframes twinkle-fast {
@@ -387,6 +246,24 @@
       100% {
         opacity: 0.85;
         filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95));
+      }
+    }
+
+    @keyframes christmas-colors {
+      0% {
+        color: #ffffff;
+      }
+      25% {
+        color: #ff4d4d;
+      }
+      50% {
+        color: #3bff7a;
+      }
+      75% {
+        color: #ffd93b;
+      }
+      100% {
+        color: #ffffff;
       }
     }
 
@@ -418,6 +295,17 @@
     }
 
     /* =========================================================
+       PETIT TEXTE EN DESSOUS (optionnel, discret)
+    ========================================================== */
+    .hint {
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      color: #c3d4ff;
+      opacity: 0.8;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+    }
+
+    /* =========================================================
        RESPONSIVE
     ========================================================== */
     @media (max-width: 900px) {
@@ -437,8 +325,8 @@
         font-size: 1rem;
       }
 
-      .reveillon-banner-text {
-        font-size: 1rem;
+      .hint {
+        font-size: 0.85rem;
       }
     }
 
@@ -459,18 +347,18 @@
         font-size: 0.9rem;
       }
 
-      .reveillon-banner-text {
-        font-size: 0.9rem;
+      .hint {
+        font-size: 0.8rem;
       }
     }
   </style>
 </head>
 <body>
   <!-- =========================================================
-       SCÈNE PRINCIPALE
+       SCÈNE
   ========================================================== -->
   <div class="scene">
-    <!-- Canvas pour neige, étoiles filantes et feux d’artifice -->
+    <!-- Canvas : neige, étoiles filantes, feux d'artifice -->
     <canvas id="effectsCanvas"></canvas>
 
     <!-- Lune 2025 -->
@@ -478,176 +366,25 @@
       <div class="moon-text">2025</div>
     </div>
 
-    <!-- Bandeau JOYEUX RÉVEILLON (toutes les 40s, 10s d'affichage) -->
-    <div class="reveillon-banner-wrapper" id="reveillonBannerWrapper">
-      <div class="reveillon-banner" id="reveillonBanner">
-        <span class="reveillon-banner-text">JOYEUX RÉVEILLON</span>
-      </div>
-    </div>
-
-    <!-- Contenu principal (compte à rebours / JOYEUX NOËL) -->
+    <!-- Contenu principal : JOYEUX NOËL en boucle -->
     <div class="content">
-      <div class="subtitle" id="subtitleText">
-        Compte à rebours avant Noël
+      <div class="subtitle">
+        C'est Noël, profite de la magie
       </div>
 
-      <!-- Compteur -->
-      <div id="countdown" class="countdown">
-        <span id="countdownText" class="countdown-text">00h 00m 00s</span>
-      </div>
-
-      <!-- Message Joyeux Noël (visible à minuit) -->
-      <div id="christmasMessage" class="christmas-message">
+      <div class="christmas-message">
         <span class="christmas-message-text">JOYEUX NOËL !</span>
+      </div>
+
+      <div class="hint">
+        Laisse tourner, la neige tombe et le ciel s'illumine sans fin.
       </div>
     </div>
   </div>
 
   <script>
     // =========================================================
-    //  COMPTE À REBOURS NOËL
-    // =========================================================
-    (function () {
-      const countdownEl = document.getElementById("countdown");
-      const countdownTextEl = document.getElementById("countdownText");
-      const christmasMessageEl = document.getElementById("christmasMessage");
-      const subtitleEl = document.getElementById("subtitleText");
-      const reveillonBannerWrapper = document.getElementById("reveillonBannerWrapper");
-
-      let isChristmas = false; // bascule en mode Noël à minuit
-
-      // Renvoie la date du prochain Noël (25 décembre à minuit)
-      function getNextChristmas() {
-        const now = new Date();
-        const currentYear = now.getFullYear();
-        const christmasThisYear = new Date(currentYear, 11, 25, 0, 0, 0);
-        if (now >= christmasThisYear) {
-          return new Date(currentYear + 1, 11, 25, 0, 0, 0);
-        }
-        return christmasThisYear;
-      }
-
-      const targetDate = getNextChristmas();
-
-      function formatTime(value) {
-        return value.toString().padStart(2, "0");
-      }
-
-      function switchToChristmasMode() {
-        if (isChristmas) return;
-        isChristmas = true;
-
-        // Masquer le compte à rebours
-        countdownEl.style.display = "none";
-
-        // Masquer définitivement le bandeau "Joyeux Réveillon"
-        reveillonBannerWrapper.style.display = "none";
-
-        // Changer le sous-titre
-        subtitleEl.textContent = "C'est Noël !";
-
-        // Afficher le message JOYEUX NOËL
-        christmasMessageEl.style.display = "inline-block";
-
-        // Lancer les feux d'artifice continus
-        startFireworksContinuous();
-      }
-
-      function updateCountdown() {
-        const now = new Date();
-        const diff = targetDate - now;
-
-        if (diff <= 0) {
-          // C'est Noël : on bascule en mode Noël
-          switchToChristmasMode();
-          return;
-        }
-
-        const totalSeconds = Math.floor(diff / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-
-        const text =
-          formatTime(hours) + "h " +
-          formatTime(minutes) + "m " +
-          formatTime(seconds) + "s";
-
-        countdownTextEl.textContent = text;
-      }
-
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    })();
-
-    // =========================================================
-    //  GESTION DU BANDEAU "JOYEUX RÉVEILLON"
-    // =========================================================
-    (function () {
-      const banner = document.getElementById("reveillonBanner");
-      const wrapper = document.getElementById("reveillonBannerWrapper");
-
-      let bannerVisible = false;
-      let lastBannerShowTime = 0;
-      const BANNER_INTERVAL = 40000; // toutes les 40 secondes
-      const BANNER_DURATION = 10000; // reste 10 secondes
-
-      let christmasMode = false;
-
-      // appelé depuis le mode Noël pour désactiver le bandeau
-      window.disableReveillonBanner = function () {
-        christmasMode = true;
-        wrapper.style.display = "none";
-      };
-
-      function showBanner(timestamp) {
-        if (christmasMode) return;
-
-        bannerVisible = true;
-        lastBannerShowTime = timestamp;
-        banner.classList.remove("reveillon-hide");
-        void banner.offsetWidth;
-        banner.classList.add("reveillon-visible");
-      }
-
-      function hideBanner() {
-        if (!bannerVisible) return;
-        bannerVisible = false;
-        banner.classList.remove("reveillon-visible");
-        void banner.offsetWidth;
-        banner.classList.add("reveillon-hide");
-      }
-
-      function updateBanner(timestamp) {
-        if (christmasMode) return;
-
-        if (!lastBannerShowTime) {
-          // première apparition après 2 secondes pour un petit effet
-          if (timestamp > 2000) {
-            showBanner(timestamp);
-          }
-          return;
-        }
-
-        // si le bandeau est visible, vérifier s'il doit disparaître
-        if (bannerVisible) {
-          if (timestamp - lastBannerShowTime > BANNER_DURATION) {
-            hideBanner();
-          }
-        } else {
-          // si le bandeau est caché, vérifier si on doit le réafficher
-          if (timestamp - lastBannerShowTime > BANNER_INTERVAL) {
-            showBanner(timestamp);
-          }
-        }
-      }
-
-      // On expose la fonction au scope global pour l'animation loop
-      window.updateReveillonBanner = updateBanner;
-    })();
-
-    // =========================================================
-    //  NEIGE + ÉTOILES FILANTES + FEUX D’ARTIFICE
+    //  NEIGE + ÉTOILES FILANTES + FEUX D’ARTIFICE (BOUCLE NOËL)
     // =========================================================
     const canvas = document.getElementById("effectsCanvas");
     const ctx = canvas.getContext("2d");
@@ -666,7 +403,7 @@
 
     // ----------------------------- NEIGE -----------------------------
     const snowflakes = [];
-    const SNOW_COUNT = 220;
+    const SNOW_COUNT = 230;
 
     function createSnowflake() {
       return {
@@ -683,10 +420,33 @@
       snowflakes.push(createSnowflake());
     }
 
+    function drawSnow() {
+      ctx.save();
+      ctx.fillStyle = "#ffffff";
+      for (const flake of snowflakes) {
+        ctx.globalAlpha = flake.opacity;
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        flake.y += flake.speedY;
+        flake.x += flake.driftX;
+
+        if (flake.y > height + 5 || flake.x < -5 || flake.x > width + 5) {
+          flake.x = Math.random() * width;
+          flake.y = -10;
+          flake.radius = Math.random() * 2.4 + 0.8;
+          flake.speedY = Math.random() * 1.3 + 0.4;
+          flake.opacity = Math.random() * 0.6 + 0.2;
+        }
+      }
+      ctx.restore();
+    }
+
     // ----------------------------- ÉTOILES FILANTES -----------------------------
     let shootingStars = [];
     let lastShootingStar = 0;
-    const SHOOTING_INTERVAL = 5000; // toutes les 5 secondes
+    const SHOOTING_INTERVAL = 5000; // toutes les 5s
 
     function createShootingStar() {
       shootingStars.push({
@@ -732,21 +492,11 @@
 
     // ------------------------ FEUX D’ARTIFICE ------------------------
     let fireworks = [];
-
-    // Mode continu (quand Noël est atteint)
-    let fireworksContinuous = false;
-
-    // Gestion de la cadence des explosions
     let lastFireworkTime = 0;
-    const FIREWORK_INTERVAL = 800; // intervalle entre explosions dans un groupe
+    const FIREWORK_INTERVAL = 800; // entre explosions dans un groupe
 
-    function startFireworksContinuous() {
-      fireworksContinuous = true;
-      // Désactiver le bandeau Réveillon coté JS
-      if (typeof window.disableReveillonBanner === "function") {
-        window.disableReveillonBanner();
-      }
-    }
+    // Mode boucle : ici, Noël est déjà là, donc on tire tout le temps
+    let fireworksContinuous = true;
 
     function createFirework() {
       const x = Math.random() * width * 0.8 + width * 0.1;
@@ -782,70 +532,7 @@
       fireworks.push({ particles });
     }
 
-    // ----------------------------- FEUX D’ARTIFICE PROGRAMMÉS -----------------------------
-    let autoFireworks = false;
-    let autoFireworkStart = 0;
-    let lastAutoFirework = 0;
-    const AUTO_FIREWORK_INTERVAL = 30000; // toutes les 30 secondes
-    const AUTO_FIREWORK_DURATION = 10000; // durent 10 secondes
-
-    function updateAutoFireworks(timestamp) {
-      // Démarrer un cycle toutes les 30 secondes
-      if (timestamp - lastAutoFirework > AUTO_FIREWORK_INTERVAL) {
-        autoFireworks = true;
-        autoFireworkStart = timestamp;
-        lastAutoFirework = timestamp;
-      }
-
-      // Arrêter après 10 secondes
-      if (autoFireworks && timestamp - autoFireworkStart > AUTO_FIREWORK_DURATION) {
-        autoFireworks = false;
-      }
-
-      // Pendant la fenêtre active → créer des feux d’artifice
-      if (autoFireworks) {
-        if (!lastFireworkTime || timestamp - lastFireworkTime > FIREWORK_INTERVAL) {
-          createFirework();
-          lastFireworkTime = timestamp;
-        }
-      }
-    }
-
-    // --------------------- BOUCLE D’ANIMATION -----------------------
-    function animate(timestamp) {
-      // Fond de canvas nettoyé
-      ctx.clearRect(0, 0, width, height);
-
-      // ---------------- NEIGE ----------------
-      ctx.save();
-      ctx.fillStyle = "#ffffff";
-      for (const flake of snowflakes) {
-        ctx.globalAlpha = flake.opacity;
-        ctx.beginPath();
-        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
-        ctx.fill();
-
-        flake.y += flake.speedY;
-        flake.x += flake.driftX;
-
-        if (flake.y > height + 5 || flake.x < -5 || flake.x > width + 5) {
-          flake.x = Math.random() * width;
-          flake.y = -10;
-          flake.radius = Math.random() * 2.4 + 0.8;
-          flake.speedY = Math.random() * 1.3 + 0.4;
-          flake.opacity = Math.random() * 0.6 + 0.2;
-        }
-      }
-      ctx.restore();
-
-      // ---------------- ÉTOILES FILANTES ----------------
-      if (!lastShootingStar || timestamp - lastShootingStar > SHOOTING_INTERVAL) {
-        createShootingStar();
-        lastShootingStar = timestamp;
-      }
-      drawShootingStars();
-
-      // ---------------- FEUX D’ARTIFICE CONTINUS (mode Noël) ----------------
+    function drawFireworks(timestamp) {
       if (fireworksContinuous) {
         if (!lastFireworkTime || timestamp - lastFireworkTime > FIREWORK_INTERVAL) {
           createFirework();
@@ -853,10 +540,6 @@
         }
       }
 
-      // ---------------- FEUX D’ARTIFICE PROGRAMMÉS ----------------
-      updateAutoFireworks(timestamp);
-
-      // ---------------- RENDU DES PARTICULES DE FEUX D’ARTIFICE ----------------
       const gravity = 0.04;
       for (let i = fireworks.length - 1; i >= 0; i--) {
         const fw = fireworks[i];
@@ -887,13 +570,22 @@
         }
       }
 
-      // Reset alpha
       ctx.globalAlpha = 1;
+    }
 
-      // ---------------- BANDEAU JOYEUX RÉVEILLON ----------------
-      if (typeof window.updateReveillonBanner === "function") {
-        window.updateReveillonBanner(timestamp);
+    // --------------------- BOUCLE D’ANIMATION -----------------------
+    function animate(timestamp) {
+      ctx.clearRect(0, 0, width, height);
+
+      drawSnow();
+
+      if (!lastShootingStar || timestamp - lastShootingStar > SHOOTING_INTERVAL) {
+        createShootingStar();
+        lastShootingStar = timestamp;
       }
+      drawShootingStars();
+
+      drawFireworks(timestamp);
 
       requestAnimationFrame(animate);
     }
