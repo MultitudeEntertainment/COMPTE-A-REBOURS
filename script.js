@@ -26,10 +26,54 @@ setInterval(updateCountdown, 1000);
 updateCountdown();
 
 
-// ---------------------------
-// 🎆 FEU D’ARTIFICE 2D
-// ---------------------------
+// ❄️ NEIGE ANIMÉE
+const snowCanvas = document.getElementById("snow");
+const snowCtx = snowCanvas.getContext("2d");
 
+snowCanvas.width = window.innerWidth;
+snowCanvas.height = window.innerHeight;
+
+const flakes = [];
+
+for (let i = 0; i < 150; i++) {
+    flakes.push({
+        x: Math.random() * snowCanvas.width,
+        y: Math.random() * snowCanvas.height,
+        r: Math.random() * 3 + 1,
+        d: Math.random() + 1
+    });
+}
+
+function drawSnow() {
+    snowCtx.clearRect(0, 0, snowCanvas.width, snowCanvas.height);
+    snowCtx.fillStyle = "white";
+    snowCtx.beginPath();
+
+    for (let f of flakes) {
+        snowCtx.moveTo(f.x, f.y);
+        snowCtx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+    }
+
+    snowCtx.fill();
+    updateSnow();
+}
+
+function updateSnow() {
+    for (let f of flakes) {
+        f.y += Math.pow(f.d, 2) + 1;
+        f.x += Math.sin(f.y * 0.01);
+
+        if (f.y > snowCanvas.height) {
+            f.y = -10;
+            f.x = Math.random() * snowCanvas.width;
+        }
+    }
+}
+
+setInterval(drawSnow, 33);
+
+
+// 🎆 FEUX D’ARTIFICE
 function startFireworks() {
     const canvas = document.getElementById("fireworks");
     const ctx = canvas.getContext("2d");
